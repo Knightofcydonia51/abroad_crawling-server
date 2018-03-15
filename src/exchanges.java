@@ -50,7 +50,7 @@ public class exchanges extends HttpServlet {
 			Document doc=null;
 			i=doc.toString();
 			Document shinhan=Jsoup.parse(i);
-			Element shinhanBuyRate =shinhan.select("")
+			Elements shinhanBuyRate =shinhan.select(".w2grid_input w2grid_input_readonly");
 			
 			//#HANA_CONTENTS_DIV > div.btnBoxCenter > a
 		}
