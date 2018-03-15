@@ -38,16 +38,20 @@ public class exchanges extends HttpServlet {
 			driver = new ChromeDriver();
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			
-			
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);//그냥 5초 기다리기
 			driver.get("https://bank.shinhan.com/index.jsp#020501010100");
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("wq_uuid_1578")));
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			driver.findElement(By.id("wq_uuid_1578")).click();
-					
+			Thread.sleep(2000);
+			//w2grid_input w2grid_input_readonly
 			String i=driver.getPageSource();
-			System.out.println(i);
-		
+			Document doc=null;
+			i=doc.toString();
+			Document shinhan=Jsoup.parse(i);
+			Element shinhanBuyRate =shinhan.select("")
+			
 			//#HANA_CONTENTS_DIV > div.btnBoxCenter > a
 		}
 		
@@ -94,7 +98,7 @@ public class exchanges extends HttpServlet {
 		}
 
 		public static void main(String[] args) throws IOException, InterruptedException {
-			System.out.println(dollarRate());
+			
 			setUp();
 		}
 }
