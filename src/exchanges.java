@@ -30,7 +30,7 @@ public class exchanges extends HttpServlet {
 			
 			
 			String jsonData = "";
-			return jsonData;
+			return jsonData; 
 		}
 		
 		public static void setUp() throws InterruptedException {
