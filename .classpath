@@ -13,5 +13,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/Desktop/jsoup-1.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/Desktop/selenium-server-standalone-3.11.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
