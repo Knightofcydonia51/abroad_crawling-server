@@ -41,19 +41,19 @@ public class exchanges extends HttpServlet {
 		System.out.println(shinhanMap);
 		
 		//하나은행
-		BufferedReader hana = new BufferedReader(new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\hana.txt"));
-		String hanaUrl = hana.readLine();
-		Document hanaDoc = Jsoup.connect(hanaUrl).get();
-
-		Elements hanaBuyRate = hanaDoc.select(".buy");
-		Elements hanaSellRate = hanaDoc.select(".sell");
-		String hanaBuyDollar = hanaBuyRate.get(0).text();
-		String hanaSellDollar = hanaSellRate.get(0).text();
+		LinkedHashMap hanaMap = new LinkedHashMap();
+		hanaMap.put("하나", bankList.hanaBank());
+		System.out.println(hanaMap);
 		
 		return null;
 
 		//우리은행
 		
+		//NH
+		
+		//IBK
+		
+		//KB
 		
 		
 		
