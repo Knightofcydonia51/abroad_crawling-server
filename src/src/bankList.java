@@ -9,36 +9,31 @@ import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
-
 public class bankList {
-	
 	private static WebDriver driver;
 	private String url;
 	
 	public static ArrayList<String> shinhanBank() throws IOException, InterruptedException {
-	ChromeOptions options = new ChromeOptions();
-	options.setBinary("C:\\0.bigdata\\chromedriver_win32\\chromedriver.exe");
-	options.addArguments("--headless");
-	DesiredCapabilities.chrome();
-	
-	ArrayList shinhanList = new ArrayList();
 	System.setProperty("webdriver.chrome.driver", "C:\\0.bigdata\\chromedriver_win32\\chromedriver.exe");
-	driver = new ChromeDriver();
-	WebDriverWait wait = new WebDriverWait(driver, 10);
+	ChromeDriver driver = new ChromeDriver();
+	
 	BufferedReader shinhan = new BufferedReader(new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\shinhan.txt"));
 	String shinhanUrl = shinhan.readLine();
 	driver.get(shinhanUrl);
-	Thread.sleep(1500);
-	// w2grid_input w2grid_input_readonly
+	WebDriverWait wait = new WebDriverWait(driver, 10);
+	wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#grd_list_1_cell_0_7 > nobr")));
+	
+	//Thread.sleep(1500);
 	String html = driver.getPageSource();
+	System.out.println(html);
 	Document shinhanDoc = Jsoup.parse(html);
 	
 	Elements shinDollarBuyRate = shinhanDoc.select("#grd_list_1_cell_0_7 > nobr");
@@ -49,7 +44,9 @@ public class bankList {
 	Elements shinYuanSellRate = shinhanDoc.select("#grd_list_1_cell_10_5 > nobr");
 	Elements shinYenBuyRate = shinhanDoc.select("#grd_list_1_cell_1_7");
 	Elements shinYenSellRate = shinhanDoc.select("#grd_list_1_cell_1_5 > nobr");
-
+	
+	driver.quit();
+	
 	String shinBuyDollar = shinDollarBuyRate.text();
 	String shinSellDollar = shinDollarSellRate.text();
 	String shinBuyEuro = shinEuroBuyRate.text();
@@ -59,15 +56,36 @@ public class bankList {
 	String shinBuyYen = shinYenBuyRate.text();
 	String shinSellYen = shinYenSellRate.text();
 	
+	ArrayList shinhanList = new ArrayList();
 	shinhanList.add(shinBuyDollar);
 	shinhanList.add(shinSellDollar);
 	shinhanList.add(shinBuyEuro);
 	shinhanList.add(shinSellEuro);
 	shinhanList.add(shinBuyYuan);
 	shinhanList.add(shinSellYuan);
+	shinhanList.add(shinBuyYen);
+	shinhanList.add(shinSellYen);
 	
 	return shinhanList;
 	}
+	
+	public static ArrayList<String> hanaBank() throws IOException {
+		BufferedReader hana = new BufferedReader(new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\hana.txt"));
+		String hanaUrl = hana.readLine();
+		Document hanaDoc = Jsoup.connect(hanaUrl).get();
+
+		Elements hanaDollarBuyRate = hanaDoc.select("#freetbl > ul > li.first_child.on > div > table > tbody > tr.first > td.buy");
+		Elements hanaDollarSellRate = hanaDoc.select("#freetbl > ul > li.first_child.on > div > table > tbody > tr.first > td.sell");
+		Elements hanaEuroBuyRate = hanaDoc.select("#freetbl > ul > li.first_child.on > div > table > tbody > tr:nth-child(3) > td.buy");
+		Elements hanaEuroSellRate = hanaDoc.select("#freetbl > ul > li.first_child.on > div > table > tbody > tr:nth-child(3) > td.sell");
+		Elements hanaYuanBuyRate = hanaDoc.select("#freetbl > ul > li.first_child.on > div > table > tbody > tr:nth-child(4) > td.buy");
+		Elements hanaYuanSellRate = hanaDoc.select("#freetbl > ul > li.first_child.on > div > table > tbody > tr:nth-child(4) > td.sell");
+		Elements hanaYenBuyRate = hanaDoc.select("");
+		
+		String hanaBuyDollar = hanaDollarBuyRate.text();
+		String hanaSellDollar = hanaDollarSellRate.text();
+		return null;
+		}
 	
 
 }

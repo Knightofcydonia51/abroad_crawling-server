@@ -37,7 +37,7 @@ public class exchanges extends HttpServlet {
 		
 		//신한은행	
 		LinkedHashMap shinhanMap = new LinkedHashMap();
-		shinhanMap.put(1, bankList.shinhanBank());
+		shinhanMap.put("신한", bankList.shinhanBank());
 		System.out.println(shinhanMap);
 		
 		//하나은행
