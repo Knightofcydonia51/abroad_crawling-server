@@ -45,16 +45,23 @@ public class exchanges extends HttpServlet {
 		hanaMap.put("窍唱", bankList.hanaBank());
 		System.out.println(hanaMap);
 		
-		return null;
-
 		//快府篮青
+		LinkedHashMap wooMap = new LinkedHashMap();
+		wooMap.put("快府", bankList.wooriBank());
+		System.out.println(wooMap);
 		
 		//NH
+		LinkedHashMap nhMap = new LinkedHashMap();
+		nhMap.put("丑蛆", bankList.nhBank());
+		System.out.println(nhMap);
 		
 		//IBK
 		
-		//KB
 		
+		//KB
+		LinkedHashMap kbMap = new LinkedHashMap();
+		kbMap.put("KB", bankList.kbBank());
+		System.out.println(kbMap);
 		
 		
 		/*public static String jsonMaker() {
@@ -67,6 +74,10 @@ public class exchanges extends HttpServlet {
 		jsonData += "fromW:" + hanaBuyDollar + ",";
 		jsonData += "toW:" + hanaSellDollar + "}";
 		return jsonData;*/
+		
+		
+		return null;
+
 	}
 
 	
