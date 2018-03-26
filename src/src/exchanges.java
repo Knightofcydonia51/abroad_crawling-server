@@ -132,6 +132,13 @@ public class Exchanges extends HttpServlet {
          }
          return jsonData;
       }
+	 
+	 public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
+	 
+	 }
+	 
+	 
+	 
 
 	/*
 	 * final String address =
