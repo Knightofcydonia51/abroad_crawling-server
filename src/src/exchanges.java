@@ -63,20 +63,21 @@ public class Exchanges extends HttpServlet {
 		map.put("NH", BankList.nhBank());
 		map.put("KB", BankList.kbBank());
 		
+	
 		
 		
 		System.out.println(map); //map Test
-		System.out.println(jsonMaker(map));//json Test
+		System.out.println(jsonMaker(map));
 		
-		ArrayList<ArrayList<String>> merger = new ArrayList<ArrayList<String>>();
-		ArrayList<String> buyD = new ArrayList<String>();
-		ArrayList<String> sellD = new ArrayList<String>();
-		ArrayList<String> buyE = new ArrayList<String>();
-		ArrayList<String> sellE = new ArrayList<String>();
-		ArrayList<String> buyYu = new ArrayList<String>();
-		ArrayList<String> sellYu = new ArrayList<String>();
-		ArrayList<String> buyYe = new ArrayList<String>();
-		ArrayList<String> sellYe = new ArrayList<String>();
+		ArrayList<ArrayList<Double>> merger = new ArrayList<ArrayList<Double>>();
+		ArrayList<Double> buyD = new ArrayList<Double>();
+		ArrayList<Double> sellD = new ArrayList<Double>();
+		ArrayList<Double> buyE = new ArrayList<Double>();
+		ArrayList<Double> sellE = new ArrayList<Double>();
+		ArrayList<Double> buyYu = new ArrayList<Double>();
+		ArrayList<Double> sellYu = new ArrayList<Double>();
+		ArrayList<Double> buyYe = new ArrayList<Double>();
+		ArrayList<Double> sellYe = new ArrayList<Double>();
 		
 		merger.add(buyD);
 		merger.add(sellD);
@@ -87,39 +88,31 @@ public class Exchanges extends HttpServlet {
 		merger.add(buyYe);
 		merger.add(sellYe);
 		
+		
+//		for (int i = 0; i <8; i++) {
+//			merger.get(i).add(map.get("SHINHAN").get(i));
+//			merger.get(i).add(map.get("HANA").get(i));
+//			merger.get(i).add(map.get("WOORI").get(i));
+//			merger.get(i).add(map.get("NH").get(i));
+//			merger.get(i).add(map.get("KB").get(i));
+//			
+//			java.util.Collections.sort(merger.get(i));
+//
+//		}
+		//System.out.println(merger);
+
+		
+
 //		for(String key:map.keySet()) {
-//			for(int i=0;i<8;i++) {
-//			String s1=map.get(key).get(i).replace("," , "");
-//			map.get(key).set(i, s1);
+//			for (int i = 0; i <8; i++) {
+//			String a=String.valueOf(map.get(key).get(i));
+//			map.get(key).set(i, a);
 //			}
 //		}
-		
-		for (int i = 0; i <8; i++) {
-			merger.get(i).add(map.get("SHINHAN").get(i));
-			merger.get(i).add(map.get("HANA").get(i));
-			merger.get(i).add(map.get("WOORI").get(i));
-			merger.get(i).add(map.get("NH").get(i));
-			merger.get(i).add(map.get("KB").get(i));
-			
-		
-			
-			
-			
-			Descending descending = new Descending();
-			java.util.Collections.sort(merger.get(i), descending);
-	
-		}
-		
-		
-	
-	
-		
-		
-		
-		
-	
-		
+//		
 	}
+		
+	
 	
 	 public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
          String[] money = { "$", "¢æ", "êª", "¡Í" };
@@ -171,11 +164,4 @@ public class Exchanges extends HttpServlet {
 
 	}
 }
-class Descending implements Comparator<String> {
-	 
-    @Override
-    public int compare(String o1, String o2) {
-        return o2.compareTo(o1);
-    }
- 
-}
+
