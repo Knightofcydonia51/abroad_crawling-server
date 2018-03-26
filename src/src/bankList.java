@@ -17,12 +17,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class bankList {
-	
+public class BankList {
+	static ChromeDriver driver;
+	static {
+		System.setProperty("webdriver.chrome.driver", "C:\\0.bigdata\\chromedriver_win32\\chromedriver.exe");
+		driver = new ChromeDriver();
+	}
 	
 	public static ArrayList<String> shinhanBank() throws IOException, InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\0.bigdata\\chromedriver_win32\\chromedriver.exe");
-		ChromeDriver driver = new ChromeDriver();
+		
+		
 		BufferedReader shinhan = new BufferedReader(
 		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\shinhan.txt"));
 		String shinhanUrl = shinhan.readLine();
@@ -43,17 +47,15 @@ public class bankList {
 		Elements shinYenBuyRate = shinhanDoc.select("#grd_list_1_cell_1_7");
 		Elements shinYenSellRate = shinhanDoc.select("#grd_list_1_cell_1_5 > nobr");
 
-		String shinBuyDollar = shinDollarBuyRate.text();
-		String shinSellDollar = shinDollarSellRate.text();
-		String shinBuyEuro = shinEuroBuyRate.text();
-		String shinSellEuro = shinEuroSellRate.text();
-		String shinBuyYuan = shinYuanBuyRate.text();
-		String shinSellYuan = shinYuanSellRate.text();
-		String shinBuyYen = shinYenBuyRate.text();
-		String shinSellYen = shinYenSellRate.text();
+		String shinBuyDollar = shinDollarBuyRate.text().replace(",", "");
+		String shinSellDollar = shinDollarSellRate.text().replace(",", "");
+		String shinBuyEuro = shinEuroBuyRate.text().replace(",", "");
+		String shinSellEuro = shinEuroSellRate.text().replace(",", "");
+		String shinBuyYuan = shinYuanBuyRate.text().replace(",", "");
+		String shinSellYuan = shinYuanSellRate.text().replace(",", "");
+		String shinBuyYen = shinYenBuyRate.text().replace(",", "");
+		String shinSellYen = shinYenSellRate.text().replace(",", "");
 		
-		driver.quit();
-
 		ArrayList shinhanList = new ArrayList();
 		shinhanList.add(shinBuyDollar);
 		shinhanList.add(shinSellDollar);
@@ -113,7 +115,7 @@ public class bankList {
 	}
 
 	public static ArrayList<String> wooriBank() throws IOException, InterruptedException {
-		ChromeDriver driver = new ChromeDriver();
+		//ChromeDriver driver = new ChromeDriver();
 		BufferedReader woori = new BufferedReader(
 		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\woori.txt"));
 		String wooriUrl = woori.readLine();
@@ -135,16 +137,14 @@ public class bankList {
 		Elements wooYenBuyRate = wooDoc.select("#fxprint > table > tbody > tr:nth-child(2) > td:nth-child(5)");
 		Elements wooYenSellRate = wooDoc.select("#fxprint > table > tbody > tr:nth-child(2) > td:nth-child(7)");
 
-		driver.quit();
-
-		String wooBuyDollar = wooDollarBuyRate.text();
-		String wooSellDollar = wooDollarSellRate.text();
-		String wooBuyEuro = wooEuroBuyRate.text();
-		String wooSellEuro = wooEuroSellRate.text();
-		String wooBuyYuan = wooYuanBuyRate.text();
-		String wooSellYuan = wooYuanSellRate.text();
-		String wooBuyYen = wooYenBuyRate.text();
-		String wooSellYen = wooYenSellRate.text();
+		String wooBuyDollar = wooDollarBuyRate.text().replace(",", "");
+		String wooSellDollar = wooDollarSellRate.text().replace(",", "");
+		String wooBuyEuro = wooEuroBuyRate.text().replace(",", "");
+		String wooSellEuro = wooEuroSellRate.text().replace(",", "");
+		String wooBuyYuan = wooYuanBuyRate.text().replace(",", "");
+		String wooSellYuan = wooYuanSellRate.text().replace(",", "");
+		String wooBuyYen = wooYenBuyRate.text().replace(",", "");
+		String wooSellYen = wooYenSellRate.text().replace(",", "");
 
 		ArrayList wooList = new ArrayList();
 		wooList.add(wooBuyDollar);
@@ -159,7 +159,7 @@ public class bankList {
 		return wooList;
 	}
 	public static ArrayList<String> nhBank() throws IOException, InterruptedException {
-		ChromeDriver driver = new ChromeDriver();
+		//ChromeDriver driver = new ChromeDriver();
 		BufferedReader nh = new BufferedReader(
 		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\nonghyup.txt"));
 		String nhUrl = nh.readLine();
@@ -189,17 +189,15 @@ public class bankList {
 				Elements nhYenSellRate = nhDoc
 						.select("#cont1_4 > table > tbody > tr:nth-child(2) > td:nth-child(3)");
 
-				String nhBuyDollar = nhDollarBuyRate.text();
-				String nhSellDollar = nhDollarSellRate.text();
-				String nhBuyEuro = nhEuroBuyRate.text();
-				String nhSellEuro = nhEuroSellRate.text();
-				String nhBuyYuan = nhYuanBuyRate.text();
-				String nhSellYuan = nhYuanSellRate.text();
-				String nhBuyYen = nhYenBuyRate.text();
-				String nhSellYen = nhYenSellRate.text();
-				
-				driver.quit();
-				
+				String nhBuyDollar = nhDollarBuyRate.text().replace(",", "");
+				String nhSellDollar = nhDollarSellRate.text().replace(",", "");
+				String nhBuyEuro = nhEuroBuyRate.text().replace(",", "");
+				String nhSellEuro = nhEuroSellRate.text().replace(",", "");
+				String nhBuyYuan = nhYuanBuyRate.text().replace(",", "");
+				String nhSellYuan = nhYuanSellRate.text().replace(",", "");
+				String nhBuyYen = nhYenBuyRate.text().replace(",", "");
+				String nhSellYen = nhYenSellRate.text().replace(",", "");
+			
 				ArrayList nhList = new ArrayList();
 				nhList.add(nhBuyDollar);
 				nhList.add(nhSellDollar);
@@ -213,7 +211,7 @@ public class bankList {
 				return nhList;
 	}
 	public static ArrayList<String> kbBank() throws IOException, InterruptedException {
-		ChromeDriver driver = new ChromeDriver();
+		//ChromeDriver driver = new ChromeDriver();
 		BufferedReader kb = new BufferedReader(
 		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\kb.txt"));
 		String kbUrl = kb.readLine();
@@ -242,14 +240,15 @@ public class bankList {
 				Elements kbYenSellRate = kbDoc
 						.select("#AllDsp1 > tr:nth-child(2) > td:nth-child(6)");
 
-				String kbBuyDollar = kbDollarBuyRate.text();
-				String kbSellDollar = kbDollarSellRate.text();
-				String kbBuyEuro = kbEuroBuyRate.text();
-				String kbSellEuro = kbEuroSellRate.text();
-				String kbBuyYuan = kbYuanBuyRate.text();
-				String kbSellYuan = kbYuanSellRate.text();
-				String kbBuyYen = kbYenBuyRate.text();
-				String kbSellYen = kbYenSellRate.text();
+				String kbBuyDollar = kbDollarBuyRate.text().replace(",", "");
+				String kbSellDollar = kbDollarSellRate.text().replace(",", "");
+				String kbBuyEuro = kbEuroBuyRate.text().replace(",", "");
+				String kbSellEuro = kbEuroSellRate.text().replace(",", "");
+				String kbBuyYuan = kbYuanBuyRate.text().replace(",", "");
+				String kbSellYuan = kbYuanSellRate.text().replace(",", "");
+				String kbBuyYen = kbYenBuyRate.text().replace(",", "");
+				String kbSellYen = kbYenSellRate.text().replace(",", "");
+				
 				
 				driver.quit();
 				
@@ -265,4 +264,5 @@ public class bankList {
 				
 				return kbList;
 	}
+	
 }

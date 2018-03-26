@@ -1,9 +1,14 @@
 package src;
 
+import src.BankList;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,69 +26,120 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.server.handler.GetAlertText;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.beust.jcommander.internal.Console;
+import com.gargoylesoftware.htmlunit.javascript.host.Iterator;
+import com.google.common.base.Converter;
+import com.google.common.collect.Multiset.Entry;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.CompareGenerator;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Woodstox;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import java.io.BufferedReader;
 
-public class exchanges extends HttpServlet {
-	private static WebDriver driver;
-	private String url;
+public class Exchanges extends HttpServlet {
 
-	public static LinkedHashMap<String, ArrayList<String>> allBank() throws IOException, InterruptedException {
-		//신한, 하나, 우리, NH, IBK, KB 1
-		
-		//신한은행	
-		LinkedHashMap shinhanMap = new LinkedHashMap();
-		shinhanMap.put("신한", bankList.shinhanBank());
-		System.out.println(shinhanMap);
-		
-		//하나은행
-		LinkedHashMap hanaMap = new LinkedHashMap();
-		hanaMap.put("하나", bankList.hanaBank());
-		System.out.println(hanaMap);
-		
-		//우리은행
-		LinkedHashMap wooMap = new LinkedHashMap();
-		wooMap.put("우리", bankList.wooriBank());
-		System.out.println(wooMap);
-		
-		//NH
-		LinkedHashMap nhMap = new LinkedHashMap();
-		nhMap.put("농협", bankList.nhBank());
-		System.out.println(nhMap);
-		
-		//IBK
+	public static void allBank() throws IOException, InterruptedException {
+		// 신한, 하나, 우리, NH, IBK, KB 1
 		
 		
-		//KB
-		LinkedHashMap kbMap = new LinkedHashMap();
-		kbMap.put("KB", bankList.kbBank());
-		System.out.println(kbMap);
+		// 신한은행
+		LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap<>();
 		
 		
-		/*public static String jsonMaker() {
-		String jsonData = "{";
-		jsonData += "'bank':" + "'SHINHAN'" + ",";
-		jsonData += "fromW:" + shinhanBuyDollar + ",";
-		jsonData += "toW:" + hanaSellDollar + "}";
 		
-		jsonData += "'bank':" + "'HANA'" + ",";
-		jsonData += "fromW:" + hanaBuyDollar + ",";
-		jsonData += "toW:" + hanaSellDollar + "}";
-		return jsonData;*/
+		try {
+			map.put("SHINHAN", BankList.shinhanBank());
+		} catch (Exception e) {
+			System.out.println("고시 환율을 등록 중입니다.");
+		}
+		map.put("HANA", BankList.hanaBank());
+		map.put("WOORI", BankList.wooriBank());
+		map.put("NH", BankList.nhBank());
+		map.put("KB", BankList.kbBank());
 		
 		
-		return null;
-
+		
+		System.out.println(map); //map Test
+		System.out.println(jsonMaker(map));//json Test
+		
+		ArrayList<ArrayList<String>> merger = new ArrayList<ArrayList<String>>();
+		ArrayList<String> buyD = new ArrayList<String>();
+		ArrayList<String> sellD = new ArrayList<String>();
+		ArrayList<String> buyE = new ArrayList<String>();
+		ArrayList<String> sellE = new ArrayList<String>();
+		ArrayList<String> buyYu = new ArrayList<String>();
+		ArrayList<String> sellYu = new ArrayList<String>();
+		ArrayList<String> buyYe = new ArrayList<String>();
+		ArrayList<String> sellYe = new ArrayList<String>();
+		
+		merger.add(buyD);
+		merger.add(sellD);
+		merger.add(buyE);
+		merger.add(sellE);
+		merger.add(buyYu);
+		merger.add(sellYu);
+		merger.add(buyYe);
+		merger.add(sellYe);
+		
+//		for(String key:map.keySet()) {
+//			for(int i=0;i<8;i++) {
+//			String s1=map.get(key).get(i).replace("," , "");
+//			map.get(key).set(i, s1);
+//			}
+//		}
+		
+		for (int i = 0; i <8; i++) {
+			merger.get(i).add(map.get("SHINHAN").get(i));
+			merger.get(i).add(map.get("HANA").get(i));
+			merger.get(i).add(map.get("WOORI").get(i));
+			merger.get(i).add(map.get("NH").get(i));
+			merger.get(i).add(map.get("KB").get(i));
+			
+		
+			
+			
+			
+			Descending descending = new Descending();
+			java.util.Collections.sort(merger.get(i), descending);
+	
+		}
+		
+		
+	
+	
+		
+		
+		
+		
+	
+		
 	}
+	
+	 public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
+         String[] money = { "$", "€", "元", "￥" };
+         int i = 0;
+         String jsonData = "{";
+         jsonData += "'entry': ['$', '€', '元', '￥'], 'excData':{";
 
-	
-	
-	
-	
+         for (String s : money) {
+            jsonData += "'" + s + "':" + "[";
+            for (String key : map.keySet()) {
+               System.out.println(i);
+               jsonData += "{" + "'bank':" + "'" + key + "'" + ",";
+               jsonData += "'fromW':" +"'"+map.get(key).get(i % 4)+"'"  + ",";
+               jsonData += "'toW':" +"'" +map.get(key).get(i % 4 + 1)+"'" + "}" + ",";
+            }
+            i += 2;
+         }
+         return jsonData;
+      }
+
 	/*
 	 * final String address =
 	 * "http://finance.naver.com//sise/entryJongmok.nhn?&page=" + a; Document doc =
@@ -100,14 +156,26 @@ public class exchanges extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		allBank();
+		
+		
 
 	}
+}
+class Descending implements Comparator<String> {
+	 
+    @Override
+    public int compare(String o1, String o2) {
+        return o2.compareTo(o1);
+    }
+ 
 }
