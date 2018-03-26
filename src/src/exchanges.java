@@ -45,10 +45,10 @@ import java.io.BufferedReader;
 public class Exchanges extends HttpServlet {
 
 	public static void allBank() throws IOException, InterruptedException {
-		// ½ÅÇÑ, ÇÏ³ª, ¿ì¸®, NH, IBK, KB 1
+		// ì‹ í•œ, í•˜ë‚˜, ìš°ë¦¬, NH, IBK, KB 1
 		
 		
-		// ½ÅÇÑÀºÇà
+		// ì‹ í•œì€í–‰
 		LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap<>();
 		
 		
@@ -56,7 +56,7 @@ public class Exchanges extends HttpServlet {
 		try {
 			map.put("SHINHAN", BankList.shinhanBank());
 		} catch (Exception e) {
-			System.out.println("°í½Ã È¯À²À» µî·Ï ÁßÀÔ´Ï´Ù.");
+			System.out.println("ê³ ì‹œ í™˜ìœ¨ì„ ë“±ë¡ ì¤‘ì…ë‹ˆë‹¤.");
 		}
 		map.put("HANA", BankList.hanaBank());
 		map.put("WOORI", BankList.wooriBank());
@@ -89,17 +89,17 @@ public class Exchanges extends HttpServlet {
 		merger.add(sellYe);
 		
 		
-//		for (int i = 0; i <8; i++) {
-//			merger.get(i).add(map.get("SHINHAN").get(i));
-//			merger.get(i).add(map.get("HANA").get(i));
-//			merger.get(i).add(map.get("WOORI").get(i));
-//			merger.get(i).add(map.get("NH").get(i));
-//			merger.get(i).add(map.get("KB").get(i));
-//			
-//			java.util.Collections.sort(merger.get(i));
-//
-//		}
-		//System.out.println(merger);
+		for (int i = 0; i <8; i++) {
+			merger.get(i).add(Double.parseDouble(map.get("SHINHAN").get(i)));
+			merger.get(i).add(Double.parseDouble(map.get("HANA").get(i)));
+			merger.get(i).add(Double.parseDouble(map.get("WOORI").get(i)));
+			merger.get(i).add(Double.parseDouble(map.get("NH").get(i)));
+			merger.get(i).add(Double.parseDouble(map.get("KB").get(i)));
+			
+			java.util.Collections.sort(merger.get(i));
+
+		}
+		System.out.println(merger);
 
 		
 
@@ -115,10 +115,10 @@ public class Exchanges extends HttpServlet {
 	
 	
 	 public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
-         String[] money = { "$", "¢æ", "êª", "¡Í" };
+         String[] money = { "$", "â‚¬", "å…ƒ", "ï¿¥" };
          int i = 0;
          String jsonData = "{";
-         jsonData += "'entry': ['$', '¢æ', 'êª', '¡Í'], 'excData':{";
+         jsonData += "'entry': ['$', 'â‚¬', 'å…ƒ', 'ï¿¥'], 'excData':{";
 
          for (String s : money) {
             jsonData += "'" + s + "':" + "[";
@@ -139,7 +139,7 @@ public class Exchanges extends HttpServlet {
 	 * Jsoup.connect(address).get(); LinkedHashMap<String, String> list = new
 	 * LinkedHashMap<String, String>();
 	 * 
-	 * Elements i = doc.select(".ctg a"); // Å¬·¡½º cta¿¡¼­ a ÅÂ±×¸¸ »©¿Ô´Ù. Elements k =
+	 * Elements i = doc.select(".ctg a"); // í´ë˜ìŠ¤ ctaì—ì„œ a íƒœê·¸ë§Œ ë¹¼ì™”ë‹¤. Elements k =
 	 * doc.select(".number_2"); int size = i.size(); for (int b = 0; b < size ; b++)
 	 * { Element object = i.get(b); Element stock = k.get(4*b);
 	 * list.put(object.text(), stock.text()); }
