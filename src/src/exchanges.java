@@ -1,7 +1,7 @@
 package src;
 
-import src.BankList;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import org.apache.catalina.filters.SetCharacterEncodingFilter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -42,9 +44,10 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import java.io.BufferedReader;
 
+@WebServlet("/api/exchanges")
 public class Exchanges extends HttpServlet {
-
-	public static void allBank() throws IOException, InterruptedException {
+	
+	public static String allBank() throws Exception {
 		LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap<>();
 
 		try {
@@ -58,7 +61,7 @@ public class Exchanges extends HttpServlet {
 		map.put("KB", BankList.kbBank());
 
 		System.out.println(map); // map Test
-		System.out.println(jsonMaker(map));
+		
 
 		ArrayList<ArrayList<Float>> merger = new ArrayList<ArrayList<Float>>();
 		ArrayList<Float> buyD = new ArrayList<Float>();
@@ -101,8 +104,10 @@ public class Exchanges extends HttpServlet {
 		calculator.add(merger.get(6).get(0) - (merger.get(6).get(0) - merger.get(7).get(4)) / 4);
 		calculator.add(merger.get(7).get(4) + (merger.get(6).get(0) - merger.get(7).get(4)) / 4);
 
-		System.out.println(calculator);
-		System.out.println(jsonMaker2(calculator));
+//		System.out.println(calculator);
+//		System.out.print(jsonMaker(map));
+//		System.out.println(jsonMaker2(calculator));
+		return jsonMaker(map) + jsonMaker2(calculator);
 	}
 
 	public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
@@ -134,7 +139,7 @@ public class Exchanges extends HttpServlet {
 		for (int i = 0; i < 7; i += 2) {
 			jsonData += "'" + money[k] + "':" + "{";
 			jsonData += "'fromW':" + "'" + String.format("%.2f", calculator.get(i)) + "'" + ",";
-			jsonData += "'toW':" + "'" + String.format("%.2f", calculator.get(i + 1)) + "'" + "," + "}";
+			jsonData += "'toW':" + "'" + String.format("%.2f", calculator.get(i + 1)) + "'" + "," + "},";
 			k++;
 		}
 		jsonData += "}}";
@@ -143,16 +148,14 @@ public class Exchanges extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-	}
-
-	public static void main(String[] args) throws IOException, InterruptedException {
-		allBank();
-
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		try {
+			out.print(allBank());
+		} catch (Exception e) {
+			
+		} finally {
+			out.close();
+		}
 	}
 }
