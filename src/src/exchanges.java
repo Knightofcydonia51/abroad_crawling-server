@@ -45,40 +45,31 @@ import java.io.BufferedReader;
 public class Exchanges extends HttpServlet {
 
 	public static void allBank() throws IOException, InterruptedException {
-		// 신한, 하나, 우리, NH, IBK, KB 1
-		
-		
-		// 신한은행
 		LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap<>();
-		
-		
-		
+
 		try {
 			map.put("SHINHAN", BankList.shinhanBank());
 		} catch (Exception e) {
-			System.out.println("고시 환율을 등록 중입니다.");
+			System.out.println("신한은행 오류 : 고시 환율을 등록 중입니다. 잠시 후에 시도해주세요.");
 		}
 		map.put("HANA", BankList.hanaBank());
 		map.put("WOORI", BankList.wooriBank());
 		map.put("NH", BankList.nhBank());
 		map.put("KB", BankList.kbBank());
-		
-	
-		
-		
-		System.out.println(map); //map Test
+
+		System.out.println(map); // map Test
 		System.out.println(jsonMaker(map));
-		
-		ArrayList<ArrayList<Double>> merger = new ArrayList<ArrayList<Double>>();
-		ArrayList<Double> buyD = new ArrayList<Double>();
-		ArrayList<Double> sellD = new ArrayList<Double>();
-		ArrayList<Double> buyE = new ArrayList<Double>();
-		ArrayList<Double> sellE = new ArrayList<Double>();
-		ArrayList<Double> buyYu = new ArrayList<Double>();
-		ArrayList<Double> sellYu = new ArrayList<Double>();
-		ArrayList<Double> buyYe = new ArrayList<Double>();
-		ArrayList<Double> sellYe = new ArrayList<Double>();
-		
+
+		ArrayList<ArrayList<Float>> merger = new ArrayList<ArrayList<Float>>();
+		ArrayList<Float> buyD = new ArrayList<Float>();
+		ArrayList<Float> sellD = new ArrayList<Float>();
+		ArrayList<Float> buyE = new ArrayList<Float>();
+		ArrayList<Float> sellE = new ArrayList<Float>();
+		ArrayList<Float> buyYu = new ArrayList<Float>();
+		ArrayList<Float> sellYu = new ArrayList<Float>();
+		ArrayList<Float> buyYe = new ArrayList<Float>();
+		ArrayList<Float> sellYe = new ArrayList<Float>();
+
 		merger.add(buyD);
 		merger.add(sellD);
 		merger.add(buyE);
@@ -87,73 +78,69 @@ public class Exchanges extends HttpServlet {
 		merger.add(sellYu);
 		merger.add(buyYe);
 		merger.add(sellYe);
-		
-		
-		for (int i = 0; i <8; i++) {
-			merger.get(i).add(Double.parseDouble(map.get("SHINHAN").get(i)));
-			merger.get(i).add(Double.parseDouble(map.get("HANA").get(i)));
-			merger.get(i).add(Double.parseDouble(map.get("WOORI").get(i)));
-			merger.get(i).add(Double.parseDouble(map.get("NH").get(i)));
-			merger.get(i).add(Double.parseDouble(map.get("KB").get(i)));
-			
+
+		for (int i = 0; i < 8; i++) {
+			merger.get(i).add(Float.parseFloat(map.get("SHINHAN").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("HANA").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("WOORI").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("NH").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("KB").get(i)));
+
 			java.util.Collections.sort(merger.get(i));
 
 		}
 		System.out.println(merger);
 
-		
+		ArrayList<Float> calculator = new ArrayList<>();
+		calculator.add(merger.get(0).get(0) - (merger.get(0).get(0) - merger.get(1).get(4)) / 4);
+		calculator.add(merger.get(1).get(4) + (merger.get(0).get(0) - merger.get(1).get(4)) / 4);
+		calculator.add(merger.get(2).get(0) - (merger.get(2).get(0) - merger.get(3).get(4)) / 4);
+		calculator.add(merger.get(3).get(4) + (merger.get(2).get(0) - merger.get(3).get(4)) / 4);
+		calculator.add(merger.get(4).get(0) - (merger.get(4).get(0) - merger.get(5).get(4)) / 4);
+		calculator.add(merger.get(5).get(4) + (merger.get(4).get(0) - merger.get(5).get(4)) / 4);
+		calculator.add(merger.get(6).get(0) - (merger.get(6).get(0) - merger.get(7).get(4)) / 4);
+		calculator.add(merger.get(7).get(4) + (merger.get(6).get(0) - merger.get(7).get(4)) / 4);
 
-//		for(String key:map.keySet()) {
-//			for (int i = 0; i <8; i++) {
-//			String a=String.valueOf(map.get(key).get(i));
-//			map.get(key).set(i, a);
-//			}
-//		}
-//		
+		System.out.println(calculator);
+		System.out.println(jsonMaker2(calculator));
 	}
-		
-	
-	
-	 public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
-         String[] money = { "$", "€", "元", "￥" };
-         int i = 0;
-         String jsonData = "{";
-         jsonData += "'entry': ['$', '€', '元', '￥'], 'excData':{";
 
-         for (String s : money) {
-            jsonData += "'" + s + "':" + "[";
-            for (String key : map.keySet()) {
-               System.out.println(i);
-               jsonData += "{" + "'bank':" + "'" + key + "'" + ",";
-               jsonData += "'fromW':" +"'"+map.get(key).get(i % 4)+"'"  + ",";
-               jsonData += "'toW':" +"'" +map.get(key).get(i % 4 + 1)+"'" + "}" + ",";
-            }
-            i += 2;
-         }
-         return jsonData;
-      }
-	 
-	 public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
-	 
-	 }
-	 
-	 
-	 
+	public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
+		String[] money = { "$", "€", "元", "￥" };
+		int i = 0;
+		String jsonData = "{";
+		jsonData += "'entry': ['$', '€', '元', '￥'], 'excData':{";
 
-	/*
-	 * final String address =
-	 * "http://finance.naver.com//sise/entryJongmok.nhn?&page=" + a; Document doc =
-	 * Jsoup.connect(address).get(); LinkedHashMap<String, String> list = new
-	 * LinkedHashMap<String, String>();
-	 * 
-	 * Elements i = doc.select(".ctg a"); // 클래스 cta에서 a 태그만 빼왔다. Elements k =
-	 * doc.select(".number_2"); int size = i.size(); for (int b = 0; b < size ; b++)
-	 * { Element object = i.get(b); Element stock = k.get(4*b);
-	 * list.put(object.text(), stock.text()); }
-	 * 
-	 * for (String key : list.keySet()) { System.out.println(key + " " +
-	 * list.get(key)); }
-	 */
+		for (String s : money) {
+			jsonData += "'" + s + "':" + "[";
+			for (String key : map.keySet()) {
+				System.out.println(i);
+				jsonData += "{" + "'bank':" + "'" + key + "'" + ",";
+				jsonData += "'fromW':" + "'" + map.get(key).get(i % 4) + "'" + ",";
+				jsonData += "'toW':" + "'" + map.get(key).get(i % 4 + 1) + "'" + "}" + "]},";
+			}
+			i += 2;
+		}
+		return jsonData;
+	}
+
+	// buyD의 1번째 값과 SELLD의 마지막 값의 차 /4 를 BUYD에는 10원 빼고 SELLD에는 10원 더함.
+	public static String jsonMaker2(ArrayList<Float> calculator) {
+		String[] money = { "$", "€", "元", "￥" };
+		int k = 0;
+		String jsonData = "'measure'" + ":{";
+		jsonData += "'$': 1, '€': 1, '元': 1, '￥': 100},";
+		jsonData += "'serviceRate': {";
+		for (int i = 0; i < 7; i += 2) {
+			jsonData += "'" + money[k] + "':" + "{";
+			jsonData += "'fromW':" + "'" + String.format("%.2f", calculator.get(i)) + "'" + ",";
+			jsonData += "'toW':" + "'" + String.format("%.2f", calculator.get(i + 1)) + "'" + "," + "}";
+			k++;
+		}
+		jsonData += "}}";
+		return jsonData;
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -166,9 +153,6 @@ public class Exchanges extends HttpServlet {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		allBank();
-		
-		
 
 	}
 }
-

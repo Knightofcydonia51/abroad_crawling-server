@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.ClickAction;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,12 +24,11 @@ public class BankList {
 		System.setProperty("webdriver.chrome.driver", "C:\\0.bigdata\\chromedriver_win32\\chromedriver.exe");
 		driver = new ChromeDriver();
 	}
-	
+
 	public static ArrayList<String> shinhanBank() throws IOException, InterruptedException {
-		
-		
+
 		BufferedReader shinhan = new BufferedReader(
-		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\shinhan.txt"));
+				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\shinhan.txt"));
 		String shinhanUrl = shinhan.readLine();
 		driver.get(shinhanUrl);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
@@ -55,7 +55,7 @@ public class BankList {
 		String shinSellYuan = shinYuanSellRate.text().replace(",", "");
 		String shinBuyYen = shinYenBuyRate.text().replace(",", "");
 		String shinSellYen = shinYenSellRate.text().replace(",", "");
-		
+
 		ArrayList shinhanList = new ArrayList();
 		shinhanList.add(shinBuyDollar);
 		shinhanList.add(shinSellDollar);
@@ -71,7 +71,7 @@ public class BankList {
 
 	public static ArrayList<String> hanaBank() throws IOException {
 		BufferedReader hana = new BufferedReader(
-		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\hana.txt"));
+				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\hana.txt"));
 		String hanaUrl = hana.readLine();
 		Document hanaDoc = Jsoup.connect(hanaUrl).get();
 
@@ -115,16 +115,14 @@ public class BankList {
 	}
 
 	public static ArrayList<String> wooriBank() throws IOException, InterruptedException {
-		//ChromeDriver driver = new ChromeDriver();
 		BufferedReader woori = new BufferedReader(
-		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\woori.txt"));
+				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\woori.txt"));
 		String wooriUrl = woori.readLine();
 		driver.get(wooriUrl);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(
-			By.cssSelector("#fxprint > table > tbody > tr:nth-child(1) > td:nth-child(5)")));
+				By.cssSelector("#fxprint > table > tbody > tr:nth-child(1) > td:nth-child(5)")));
 
-		// Thread.sleep(1500);
 		String html = driver.getPageSource();
 		Document wooDoc = Jsoup.parse(html);
 
@@ -158,111 +156,91 @@ public class BankList {
 
 		return wooList;
 	}
+
 	public static ArrayList<String> nhBank() throws IOException, InterruptedException {
-		//ChromeDriver driver = new ChromeDriver();
 		BufferedReader nh = new BufferedReader(
-		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\nonghyup.txt"));
+				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\nonghyup.txt"));
 		String nhUrl = nh.readLine();
 		driver.get(nhUrl);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(
-			By.cssSelector("#cont1_4 > table > tbody > tr:nth-child(1) > td:nth-child(2)")));
+				By.cssSelector("#cont1_4 > table > tbody > tr:nth-child(1) > td:nth-child(2)")));
 
-		// Thread.sleep(1500);
 		String html = driver.getPageSource();
 		Document nhDoc = Jsoup.parse(html);
 
-				Elements nhDollarBuyRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(1) > td:nth-child(2)");
-				Elements nhDollarSellRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(1) > td:nth-child(3)");
-				Elements nhEuroBuyRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(3) > td:nth-child(2)");
-				Elements nhEuroSellRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(3) > td:nth-child(3)");
-				Elements nhYuanBuyRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(4) > td:nth-child(2)");
-				Elements nhYuanSellRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(4) > td:nth-child(3)");
-				Elements nhYenBuyRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(2) > td:nth-child(2)");
-				Elements nhYenSellRate = nhDoc
-						.select("#cont1_4 > table > tbody > tr:nth-child(2) > td:nth-child(3)");
+		Elements nhDollarBuyRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(1) > td:nth-child(2)");
+		Elements nhDollarSellRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(1) > td:nth-child(3)");
+		Elements nhEuroBuyRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(3) > td:nth-child(2)");
+		Elements nhEuroSellRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(3) > td:nth-child(3)");
+		Elements nhYuanBuyRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(4) > td:nth-child(2)");
+		Elements nhYuanSellRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(4) > td:nth-child(3)");
+		Elements nhYenBuyRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(2) > td:nth-child(2)");
+		Elements nhYenSellRate = nhDoc.select("#cont1_4 > table > tbody > tr:nth-child(2) > td:nth-child(3)");
 
-				String nhBuyDollar = nhDollarBuyRate.text().replace(",", "");
-				String nhSellDollar = nhDollarSellRate.text().replace(",", "");
-				String nhBuyEuro = nhEuroBuyRate.text().replace(",", "");
-				String nhSellEuro = nhEuroSellRate.text().replace(",", "");
-				String nhBuyYuan = nhYuanBuyRate.text().replace(",", "");
-				String nhSellYuan = nhYuanSellRate.text().replace(",", "");
-				String nhBuyYen = nhYenBuyRate.text().replace(",", "");
-				String nhSellYen = nhYenSellRate.text().replace(",", "");
-			
-				ArrayList nhList = new ArrayList();
-				nhList.add(nhBuyDollar);
-				nhList.add(nhSellDollar);
-				nhList.add(nhBuyEuro);
-				nhList.add(nhSellEuro);
-				nhList.add(nhBuyYuan);
-				nhList.add(nhSellYuan);
-				nhList.add(nhBuyYen);
-				nhList.add(nhSellYen);
+		String nhBuyDollar = nhDollarBuyRate.text().replace(",", "");
+		String nhSellDollar = nhDollarSellRate.text().replace(",", "");
+		String nhBuyEuro = nhEuroBuyRate.text().replace(",", "");
+		String nhSellEuro = nhEuroSellRate.text().replace(",", "");
+		String nhBuyYuan = nhYuanBuyRate.text().replace(",", "");
+		String nhSellYuan = nhYuanSellRate.text().replace(",", "");
+		String nhBuyYen = nhYenBuyRate.text().replace(",", "");
+		String nhSellYen = nhYenSellRate.text().replace(",", "");
 
-				return nhList;
+		ArrayList nhList = new ArrayList();
+		nhList.add(nhBuyDollar);
+		nhList.add(nhSellDollar);
+		nhList.add(nhBuyEuro);
+		nhList.add(nhSellEuro);
+		nhList.add(nhBuyYuan);
+		nhList.add(nhSellYuan);
+		nhList.add(nhBuyYen);
+		nhList.add(nhSellYen);
+
+		return nhList;
 	}
+
 	public static ArrayList<String> kbBank() throws IOException, InterruptedException {
-		//ChromeDriver driver = new ChromeDriver();
-		BufferedReader kb = new BufferedReader(
-		new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\kb.txt"));
+		BufferedReader kb = new BufferedReader(new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\kb.txt"));
 		String kbUrl = kb.readLine();
 		driver.get(kbUrl);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(
-			By.cssSelector("#AllDsp1 > tr:nth-child(1) > td:nth-child(5)")));
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("#AllDsp1 > tr:nth-child(1) > td:nth-child(5)")));
 
-		// Thread.sleep(1500);
 		String html = driver.getPageSource();
 		Document kbDoc = Jsoup.parse(html);
-				Elements kbDollarBuyRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(1) > td:nth-child(5)");
-				Elements kbDollarSellRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(1) > td:nth-child(6)");
-				Elements kbEuroBuyRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(3) > td:nth-child(5)");
-				Elements kbEuroSellRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(3) > td:nth-child(6)");
-				Elements kbYuanBuyRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(10) > td:nth-child(5)");
-				Elements kbYuanSellRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(10) > td:nth-child(6)");
-				Elements kbYenBuyRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(2) > td:nth-child(5)");
-				Elements kbYenSellRate = kbDoc
-						.select("#AllDsp1 > tr:nth-child(2) > td:nth-child(6)");
+		Elements kbDollarBuyRate = kbDoc.select("#AllDsp1 > tr:nth-child(1) > td:nth-child(5)");
+		Elements kbDollarSellRate = kbDoc.select("#AllDsp1 > tr:nth-child(1) > td:nth-child(6)");
+		Elements kbEuroBuyRate = kbDoc.select("#AllDsp1 > tr:nth-child(3) > td:nth-child(5)");
+		Elements kbEuroSellRate = kbDoc.select("#AllDsp1 > tr:nth-child(3) > td:nth-child(6)");
+		Elements kbYuanBuyRate = kbDoc.select("#AllDsp1 > tr:nth-child(10) > td:nth-child(5)");
+		Elements kbYuanSellRate = kbDoc.select("#AllDsp1 > tr:nth-child(10) > td:nth-child(6)");
+		Elements kbYenBuyRate = kbDoc.select("#AllDsp1 > tr:nth-child(2) > td:nth-child(5)");
+		Elements kbYenSellRate = kbDoc.select("#AllDsp1 > tr:nth-child(2) > td:nth-child(6)");
 
-				String kbBuyDollar = kbDollarBuyRate.text().replace(",", "");
-				String kbSellDollar = kbDollarSellRate.text().replace(",", "");
-				String kbBuyEuro = kbEuroBuyRate.text().replace(",", "");
-				String kbSellEuro = kbEuroSellRate.text().replace(",", "");
-				String kbBuyYuan = kbYuanBuyRate.text().replace(",", "");
-				String kbSellYuan = kbYuanSellRate.text().replace(",", "");
-				String kbBuyYen = kbYenBuyRate.text().replace(",", "");
-				String kbSellYen = kbYenSellRate.text().replace(",", "");
-				
-				
-				driver.quit();
-				
-				ArrayList kbList = new ArrayList();
-				kbList.add(kbBuyDollar);
-				kbList.add(kbSellDollar);
-				kbList.add(kbBuyEuro);
-				kbList.add(kbSellEuro);
-				kbList.add(kbBuyYuan);
-				kbList.add(kbSellYuan);
-				kbList.add(kbBuyYen);
-				kbList.add(kbSellYen);
-				
-				return kbList;
+		String kbBuyDollar = kbDollarBuyRate.text().replace(",", "");
+		String kbSellDollar = kbDollarSellRate.text().replace(",", "");
+		String kbBuyEuro = kbEuroBuyRate.text().replace(",", "");
+		String kbSellEuro = kbEuroSellRate.text().replace(",", "");
+		String kbBuyYuan = kbYuanBuyRate.text().replace(",", "");
+		String kbSellYuan = kbYuanSellRate.text().replace(",", "");
+		String kbBuyYen = kbYenBuyRate.text().replace(",", "");
+		String kbSellYen = kbYenSellRate.text().replace(",", "");
+
+		driver.quit();
+
+		ArrayList kbList = new ArrayList();
+		kbList.add(kbBuyDollar);
+		kbList.add(kbSellDollar);
+		kbList.add(kbBuyEuro);
+		kbList.add(kbSellEuro);
+		kbList.add(kbBuyYuan);
+		kbList.add(kbSellYuan);
+		kbList.add(kbBuyYen);
+		kbList.add(kbSellYen);
+
+		return kbList;
 	}
-	
+
 }
