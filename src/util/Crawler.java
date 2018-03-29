@@ -77,7 +77,7 @@ public class Crawler {
         String[] moneyTypes = { "$", "€", "元", "￥" };
         int i = 0;
         int k = 0;
-        String jsonData = "{'entry':['$', '€', '元', '￥'],'excData':{";
+        String jsonData = "{'status':true,'entry':['$', '€', '元', '￥'],'excData':{";
 
         for (String moneyType : moneyTypes) {  // s - 화폐이름
            jsonData += "'" + moneyType + "':[";
