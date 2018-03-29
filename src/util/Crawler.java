@@ -11,15 +11,15 @@ public class Crawler {
 		LinkedHashMap<String, ArrayList<String>> map = new LinkedHashMap<>();
 
 		try {
-			map.put("SHINHAN", BankList.shinhanBank());
+			map.put("신한은행", BankList.shinhanBank());
 		} catch (Exception e) {
 			System.out.println("신한은행 오류 : 고시 환율을 등록 중입니다. 잠시 후에 시도해주세요.");
 		}
 		
-		map.put("HANA", BankList.hanaBank());
-		map.put("WOORI", BankList.wooriBank());
-		map.put("NH", BankList.nhBank());
-		map.put("KB", BankList.kbBank());
+		map.put("하나은행", BankList.hanaBank());
+		map.put("우리은행", BankList.wooriBank());
+		map.put("농협은행", BankList.nhBank());
+		map.put("국민은행", BankList.kbBank());
 
 		System.out.println(map); // map Test
 		
@@ -44,11 +44,11 @@ public class Crawler {
 		merger.add(sellYe);
 
 		for (int i = 0; i < 8; i++) {
-			merger.get(i).add(Float.parseFloat(map.get("SHINHAN").get(i)));
-			merger.get(i).add(Float.parseFloat(map.get("HANA").get(i)));
-			merger.get(i).add(Float.parseFloat(map.get("WOORI").get(i)));
-			merger.get(i).add(Float.parseFloat(map.get("NH").get(i)));
-			merger.get(i).add(Float.parseFloat(map.get("KB").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("신한은행").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("하나은행").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("우리은행").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("농협은행").get(i)));
+			merger.get(i).add(Float.parseFloat(map.get("국민은행").get(i)));
 
 			java.util.Collections.sort(merger.get(i));
 
@@ -69,45 +69,39 @@ public class Crawler {
 //		System.out.print(jsonMaker(map));
 //		System.out.println(jsonMaker2(calculator));
 		
-		
-		return jsonMaker(map) + jsonMaker2(calculator);
+		System.out.println(jsonMaker(map, calculator));
+		return jsonMaker(map, calculator);
 	}
     
-    public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map) {
-		String[] money = { "$", "€", "元", "￥" };
-		int i = 0;
-		String jsonData = "{";
-		jsonData += "'entry': ['$', '€', '元', '￥'], 'excData':{";
+    public static String jsonMaker(LinkedHashMap<String, ArrayList<String>> map, ArrayList<Float> calculator) {
+        String[] moneyTypes = { "$", "€", "元", "￥" };
+        int i = 0;
+        int k = 0;
+        String jsonData = "{'entry':['$', '€', '元', '￥'],'excData':{";
 
-		for (String s : money) {
-			jsonData += "'" + s + "':" + "[";
-			for (String key : map.keySet()) {
-				System.out.println(i);
-				jsonData += "{" + "'bank':" + "'" + key + "'" + ",";
-				jsonData += "'fromW':" + "'" + map.get(key).get(i % 4) + "'" + ",";
-				jsonData += "'toW':" + "'" + map.get(key).get(i % 4 + 1) + "'" + "}";
-			}
-			i += 2;
-		}
-		jsonData+= "]},";
-		return jsonData;
-	}
+        for (String moneyType : moneyTypes) {  // s - 화폐이름
+           jsonData += "'" + moneyType + "':[";
+           for (String bankName : map.keySet()) {  // bankName - 은행이름
+              ArrayList<String> bankExc = map.get(bankName);
+              jsonData += "{'bank':'" + bankName + "',";
+              jsonData += "'fromW':'" + bankExc.get(i) + "',";
+              jsonData += "'toW':'" + bankExc.get(i+1) + "'},";
+           }
+           jsonData = jsonData.substring(0, jsonData.length()-1);
+           jsonData += "],";
+           i += 2;
+        }
+        jsonData = jsonData.substring(0, jsonData.length()-1);
+        jsonData+= "},'measure':{'$':1,'€':1,'元':1,'￥':100},'serviceRate':{";
 
-	// buyD의 1번째 값과 SELLD의 마지막 값의 차 /4 를 BUYD에는 10원 빼고 SELLD에는 10원 더함.
-	public static String jsonMaker2(ArrayList<Float> calculator) {
-		String[] money = { "$", "€", "元", "￥" };
-		int k = 0;
-		String jsonData = "'measure'" + ":{";
-		jsonData += "'$': 1, '€': 1, '元': 1, '￥': 100},";
-		jsonData += "'serviceRate': {";
-		for (int i = 0; i < 7; i += 2) {
-			jsonData += "'" + money[k] + "':" + "{";
-			jsonData += "'fromW':" + "'" + String.format("%.2f", calculator.get(i)) + "'" + ",";
-			jsonData += "'toW':" + "'" + String.format("%.2f", calculator.get(i + 1)) + "'" + "," + "},";
-			k++;
-		}
-		jsonData += "}}";
-		return jsonData;
-	}
-	
+        for (i = 0; i < 7; i += 2) {
+           jsonData += "'" + moneyTypes[k++] + "':{";
+           jsonData += "'fromW':'" + String.format("%.2f", calculator.get(i)) + "',";
+           jsonData += "'toW':'" + String.format("%.2f", calculator.get(i + 1)) + "'},";
+        }
+        jsonData = jsonData.substring(0, jsonData.length()-1);
+        jsonData += "}}";
+        jsonData = jsonData.replaceAll("'", "\"");
+        return jsonData;
+     }
 }

@@ -30,7 +30,8 @@ public class BankList {
 		BufferedReader shinhan = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\shinhan.txt"));
 		String shinhanUrl = shinhan.readLine();
-		driver.get(shinhanUrl);
+		String shinhanUrlWithDummy = shinhanUrl.substring(0,34) + "?" + String.valueOf((Math.random()*1000)).replace(".", "")+shinhanUrl.substring(34);
+		driver.get(shinhanUrlWithDummy);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#grd_list_1_cell_0_7 > nobr")));
 
@@ -73,7 +74,8 @@ public class BankList {
 		BufferedReader hana = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\hana.txt"));
 		String hanaUrl = hana.readLine();
-		Document hanaDoc = Jsoup.connect(hanaUrl).get();
+		String hanaUrlWithDummy = hanaUrl + "&" + String.valueOf((Math.random()*1000)).replace(".", "");
+		Document hanaDoc = Jsoup.connect(hanaUrlWithDummy).get();
 
 		Elements hanaDollarBuyRate = hanaDoc
 				.select("#freetbl > ul > li.first_child.on > div > table > tbody > tr.first > td.buy");
@@ -118,7 +120,8 @@ public class BankList {
 		BufferedReader woori = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\woori.txt"));
 		String wooriUrl = woori.readLine();
-		driver.get(wooriUrl);
+		String wooriUrlWithDummy = wooriUrl + "&" + String.valueOf((Math.random()*1000)).replace(".", "");
+		driver.get(wooriUrlWithDummy);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(
 				By.cssSelector("#fxprint > table > tbody > tr:nth-child(1) > td:nth-child(5)")));
@@ -161,7 +164,8 @@ public class BankList {
 		BufferedReader nh = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\nonghyup.txt"));
 		String nhUrl = nh.readLine();
-		driver.get(nhUrl);
+		String nhUrlWithDummy = nhUrl + "#" + String.valueOf((Math.random()*1000)).replace(".", "");
+		driver.get(nhUrlWithDummy);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(
 				By.cssSelector("#cont1_4 > table > tbody > tr:nth-child(1) > td:nth-child(2)")));
@@ -203,7 +207,8 @@ public class BankList {
 	public static ArrayList<String> kbBank() throws IOException, InterruptedException {
 		BufferedReader kb = new BufferedReader(new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\kb.txt"));
 		String kbUrl = kb.readLine();
-		driver.get(kbUrl);
+		String kbUrlWithDummy = kbUrl + "&" + String.valueOf((Math.random()*1000)).replace(".", "");
+		driver.get(kbUrlWithDummy);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector("#AllDsp1 > tr:nth-child(1) > td:nth-child(5)")));

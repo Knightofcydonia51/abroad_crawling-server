@@ -12,17 +12,6 @@ import org.quartz.JobExecutionException;
 // server만이 호출
 @WebListener
 
-//interface JobInterface{
-//	public class QuartzJob implements Job{
-//
-//		@Override
-//		public void execute(JobExecutionContext context) throws JobExecutionException {
-//			
-//		}
-//		
-//	}
-//}
-
 public class CrawlerDataSave implements ServletContextListener {
 	
 	//서버 시작되면서 단 한번 호출 하는 생성자
