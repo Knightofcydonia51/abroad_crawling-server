@@ -2,9 +2,10 @@ package util;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
 import src.BankList;
 
-public class Crawler {
+public class Crawler{
 	
 
     public static String allBank() throws Exception {
