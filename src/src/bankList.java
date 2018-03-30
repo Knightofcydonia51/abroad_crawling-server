@@ -233,7 +233,7 @@ public class BankList {
 		String kbBuyYen = kbYenBuyRate.text().replace(",", "");
 		String kbSellYen = kbYenSellRate.text().replace(",", "");
 
-		driver.quit();
+		//driver.quit();
 
 		ArrayList kbList = new ArrayList();
 		kbList.add(kbBuyDollar);

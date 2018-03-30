@@ -29,7 +29,7 @@ public class Quartz {
 	public static void activateCycleCrawler() throws SchedulerException{
 		System.out.println("activateCycleCrawler()");
 		JobDetail job =JobBuilder.newJob(QuartzJob.class).build();
-		Trigger t1 = TriggerBuilder.newTrigger().withIdentity("CronTrigger").withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).build();
+		Trigger t1 = TriggerBuilder.newTrigger().withIdentity("CronTrigger").withSchedule(CronScheduleBuilder.cronSchedule("0/30 0/1 * 1/1 * ? *")).build();
 		sc = StdSchedulerFactory.getDefaultScheduler();
 		sc.scheduleJob(job, t1);
 		sc.start();

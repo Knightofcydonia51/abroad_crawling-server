@@ -9,4 +9,21 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <servlet-name>QuartzJob</servlet-name>
+    <servlet-class>org.quartz.ee.servlet.QuartzInitializerServlet</servlet-class>
+    <init-param>
+        <param-name>shutdown-on-unload</param-name>
+        <param-value>true</param-value>
+    </init-param>
+    <init-param>
+        <param-name>start-scheduler-on-load</param-name>
+        <param-value>true</param-value>
+    </init-param>
+    <init-param>
+        <param-name>scheduler-context-servlet-context-key</param-name>
+        <param-value>servletContext</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+</servlet>
 </web-app>
