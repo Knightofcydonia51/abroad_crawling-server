@@ -1,100 +1,91 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS</title>
-<meta charset='utf-8'>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<body>
+  <head>
+    <title>인천국제공항 지도</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: rgb(250, 250, 250);
+      }
+      .selector {
+        margin-top: 30px;
+        margin-left: 30px;
+      }
+      .btn {
+        height: 30px;
+        margin-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: white;
+        border: rgb(250, 250, 250);
+        transition: 0.25s;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+      }
+      .selector h2 {
+        margin-bottom: 10px;
+      }
+      .picture {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: -1;
+      }
+    </style>
+    <script>
+    function openImg(imgName, btnName) {
+      var i, x;
+      x = document.getElementsByClassName("picture__container");
+      for (i = 0; i < x.length; i++) {
+         x[i].style.display = "none";
+      }
+      document.getElementById(imgName).style.display = "block";
+      v = document.getElementsByClassName("btn");
+      for (i = 0; i < v.length; i++) {
+        v[i].style.backgroundColor = "white"
+        v[i].style.border = "rgb(250, 250, 250)"
+      }
+      document.getElementById(btnName).style.backgroundColor = "goldenrod";
+      document.getElementById(btnName).style.border = "none";
+    }
+    </script>
+  </head>
+  <body>
+    <div class="selector">
+      <h2>인천공항 안내도</h2>
+      <button id="btn1" class="btn" onclick="openImg('B1food', 'btn1')" style="background-color:goldenrod;border:none">지하 1층 - 음식점, 카페</button>
+      <button id="btn2" class="btn" onclick="openImg('B1bank', 'btn2')">지하 1층 - 은행 및 편의시설</button>
+      <button id="btn3" class="btn" onclick="openImg('1food', 'btn3')">1층 - 음식점, 카페</button>
+      <button id="btn4" class="btn" onclick="openImg('1bank', 'btn4')">1층 - 은행, 통신사</button>
+      <button id="btn5" class="btn" onclick="openImg('3food', 'btn5')">3층 - 음식점, 카페</button>
+      <button id="btn6" class="btn" onclick="openImg('3bank', 'btn6')">3층 - 은행, 통신사</button>
+    </div>
 
-<div class="w3-container">
-  <h2>인천공항 안내도</h2>
-  <p>원하시는 층의 지도를 클릭해주세요.</p>
-</div>
-
-<div class="w3-row-padding">
-  <div class="w3-col s3 w3-container">
-  <a href="javascript:void(0)" class="w3-hover-opacity" onclick="openImg('B1food');">
-    지하 1층 - 음식점, 카페
-  </a>
-  </div>
-  <div class="w3-col s3 w3-container">
-  <a href="javascript:void(0)" class="w3-hover-opacity" onclick="openImg('B1bank');">
-    지하 1층 - 은행 및 편의시설
-  </a>
-   <div class="w3-col s3 w3-container">
-  <a href="javascript:void(0)" class="w3-hover-opacity" onclick="openImg('1food');">
-    1층 음식점, 카페
-  </a>
-  </div>
-  <div class="w3-col s3 w3-container">
-    <a href="javascript:void(0)" class="w3-hover-opacity" onclick="openImg('1bank,moblie');">
-    1층 - 은행 통신사
-    </a>
-  </div>
-  <div class="w3-col s3 w3-container">
-    <a href="javascript:void(0)" class="w3-hover-opacity" onclick="openImg('3bank,moblie');">
-    3층 - 은행 통신사
-    </a>
-  </div>
-  <div class="w3-col s3 w3-container">
-    <a href="javascript:void(0)" class="w3-hover-opacity" onclick="openImg('3food');">
-    3층 - 음식점, 카페
-    </a>
-  </div>
-</div><br>
-
-<div id="B1food" class="picture w3-display-container" style="display:none">
-  <img src="images/B1food.png" alt="지하 1층 - 음식점" style="width:400px">
-  <span onclick="this.parentElement.style.display='none'" 
-  class="w3-display-topright w3-button w3-transparent w3-text-white">&times;</span>
-  <div class="w3-display-bottomleft w3-container w3-padding w3-text-black">지하 1층 - 음식점, 카페</div>
-</div>
-
-<div id="B1bank" class="picture w3-display-container" style="display:none">
-  <img src="images/B1bank.png" alt="지하 1층 - 음식점" style="width:75%">
-  <span onclick="this.parentElement.style.display='none'" 
-  class="w3-display-topright w3-button w3-transparent w3-text-white">&times;</span>
-  <div class="w3-display-bottomleft w3-container w3-padding w3-text-black">지하 1층 - 은행 및 편의시설</div>
-</div>
-
-<div id="1food" class="picture w3-display-container" style="display:none">
-  <img src="images/1food.png" alt="1층 - 음식점" style="width:100%">
-  <span onclick="this.parentElement.style.display='none'" 
-  class="w3-display-topright w3-button w3-transparent w3-text-white">&times;</span>
-  <div class="w3-display-bottomleft w3-container w3-padding w3-text-black">1층 - 음식점, 카페</div>
-</div>
-
-<div id="1bank,moblie" class="picture w3-display-container" style="display:none">
-  <img src="images/1bank,moblie.png" alt="Fjords" style="width:100%">
-  <span onclick="this.parentElement.style.display='none'" 
-  class="w3-display-topright w3-button w3-transparent w3-text-white">&times;</span>
-  <div class="w3-display-bottomleft w3-container w3-padding w3-text-black">1층 - 은행, 통신사</div>
-</div>
-
-<div id="3bank,moblie" class="picture w3-display-container" style="display:none">
-  <img src="images/3bank,moblie.png" alt="Mountains" style="width:100%">
-  <span onclick="this.parentElement.style.display='none'" 
-  class="w3-display-topright w3-button w3-transparent">&times;</span>
-  <div class="w3-display-bottomleft w3-container w3-padding w3-text-white">3층 - 은행, 통신사</div>
-</div>
-
-<div id="3food" class="picture w3-display-container" style="display:none">
-  <img src="images/3food.png" alt="Lights" style="width:100%">
-  <span onclick="this.parentElement.style.display='none'" 
-  class="w3-display-topright w3-button w3-transparent w3-text-white">&times;</span>
-  <div class="w3-display-bottomleft w3-container w3-padding w3-text-black">3층 - 음식점, 카페</div>
-</div>
-
-<script>
-function openImg(imgName) {
-  var i, x;
-  x = document.getElementsByClassName("picture");
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = "none";
-  }
-  document.getElementById(imgName).style.display = "block";
-}
-</script>
-
-</body>
-</html> 
+    <div id="B1food" class="picture__container" style="display:block">
+      <img src="images/B1food.png" class="picture">
+    </div>
+    <div id="B1bank" class="picture__container" style="display:none">
+      <img src="images/B1bank.png" class="picture">
+    </div>
+    <div id="1food" class="picture__container" style="display:none">
+      <img src="images/1food.png" class="picture">
+    </div>
+    <div id="1bank" class="picture__container" style="display:none">
+      <img src="images/1bank,moblie.png" class="picture">
+    </div>
+    <div id="3bank" class="picture__container" style="display:none">
+      <img src="images/3bank,moblie.png" class="picture">
+    </div>
+    <div id="3food" class="picture__container" style="display:none">
+      <img src="images/3food.png" class="picture">
+    </div>
+  </body>
+</html>
