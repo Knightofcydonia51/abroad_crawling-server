@@ -1,31 +1,31 @@
 package src;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.ClickAction;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BankList {
+	
+		 
 	static ChromeDriver driver;
 	static {
 		System.setProperty("webdriver.chrome.driver", "C:\\0.bigdata\\chromedriver_win32\\chromedriver.exe");
 		driver = new ChromeDriver();
 	}
 
-	public static ArrayList<String> shinhanBank() throws IOException, InterruptedException {
+	public static ArrayList<String> shinhanBank() throws IOException, InterruptedException, SQLException {
 
 		BufferedReader shinhan = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\shinhan.txt"));
@@ -57,6 +57,13 @@ public class BankList {
 		String shinBuyYen = shinYenBuyRate.text().replace(",", "");
 		String shinSellYen = shinYenSellRate.text().replace(",", "");
 
+		Date from = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String to = transFormat.format(from);
+
+		CrawlingDAO.insertSHINHAN(new CrawlingBean(to, shinBuyDollar, shinSellDollar, shinBuyEuro, shinSellEuro, shinBuyYuan, shinSellYuan, shinBuyYen, shinSellYen));
+		
+		
 		ArrayList shinhanList = new ArrayList();
 		shinhanList.add(shinBuyDollar);
 		shinhanList.add(shinSellDollar);
@@ -70,7 +77,7 @@ public class BankList {
 		return shinhanList;
 	}
 
-	public static ArrayList<String> hanaBank() throws IOException {
+	public static ArrayList<String> hanaBank() throws IOException, SQLException {
 		BufferedReader hana = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\hana.txt"));
 		String hanaUrl = hana.readLine();
@@ -103,6 +110,14 @@ public class BankList {
 		String hanaBuyYen = hanaYenBuyRate.text();
 		String hanaSellYen = hanaYenSellRate.text();
 
+		Date from = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = transFormat.format(from);
+
+		CrawlingDAO.insertHANA(new CrawlingBean(now, hanaBuyDollar, hanaSellDollar, hanaBuyEuro, hanaSellEuro, hanaBuyYuan, hanaSellYuan, hanaBuyYen, hanaSellYen));
+		
+		
+		
 		ArrayList hanaList = new ArrayList();
 		hanaList.add(hanaBuyDollar);
 		hanaList.add(hanaSellDollar);
@@ -112,7 +127,7 @@ public class BankList {
 		hanaList.add(hanaSellYuan);
 		hanaList.add(hanaBuyYen);
 		hanaList.add(hanaSellYen);
-
+		
 		return hanaList;
 	}
 
