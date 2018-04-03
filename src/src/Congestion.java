@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.quartz.*;
 
-@WebServlet("/api/exchange-rate")
-public class Exchanges extends HttpServlet {
+@WebServlet("/api/congestion")
+public class Congestion extends HttpServlet {
 		
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		try {
-			out.print(this.getServletContext().getAttribute("Crawling"));
+			out.print(this.getServletContext().getAttribute("Airport"));
 		} catch (Exception e) {
 			
 		} finally {

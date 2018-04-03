@@ -24,6 +24,7 @@ public class CrawlingServletContextLister implements ServletContextListener {
 		System.out.println("contextDestroyed");
 		try {
 			Quartz.stopCycleCrawler();
+			Quartz.stopAirportCrawler();
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,6 +36,7 @@ public class CrawlingServletContextLister implements ServletContextListener {
 		System.out.println("contextInitialized");
 		try {
 			Quartz.activateCycleCrawler();
+			Quartz.airportCycleCrawler();
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}

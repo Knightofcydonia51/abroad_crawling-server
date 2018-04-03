@@ -26,6 +26,7 @@ import org.quartz.impl.StdSchedulerFactory;
 
 public class Quartz {
 	private static Scheduler sc;
+	private static Scheduler airSc;
 	public static void activateCycleCrawler() throws SchedulerException{
 		System.out.println("activateCycleCrawler()");
 		JobDetail job =JobBuilder.newJob(QuartzJob.class).build();
@@ -41,4 +42,22 @@ public class Quartz {
 			sc.shutdown();
 		}
 	}
+	
+	public static void airportCycleCrawler() throws SchedulerException{
+		System.out.println("airportCrawler()");
+		JobDetail airJob =JobBuilder.newJob(AirQuartz.class).build();
+		Trigger t2 = TriggerBuilder.newTrigger().withIdentity("AirTrigger").withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).build();
+		airSc = StdSchedulerFactory.getDefaultScheduler();
+		airSc.scheduleJob(airJob, t2);
+		airSc.start();
+	}
+	
+	public static void stopAirportCrawler() throws SchedulerException {
+		System.out.println("stopAirCrawler()");
+		if (airSc != null) {
+			airSc.shutdown();
+		}
+	}
+	
+	
 }

@@ -25,5 +25,13 @@
         <param-value>servletContext</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-</servlet>
+	</servlet>
+	<servlet>
+		<servlet-name>airport-map</servlet-name>
+		<jsp-file>/airport-map.jsp</jsp-file>
+	</servlet>
+    <servlet-mapping>
+    	<servlet-name>airport-map</servlet-name>
+    	<url-pattern>/airport-map</url-pattern>
+    </servlet-mapping>	
 </web-app>
