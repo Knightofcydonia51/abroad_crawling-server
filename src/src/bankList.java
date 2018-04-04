@@ -131,7 +131,7 @@ public class BankList {
 		return hanaList;
 	}
 
-	public static ArrayList<String> wooriBank() throws IOException, InterruptedException {
+	public static ArrayList<String> wooriBank() throws IOException, InterruptedException, SQLException {
 		BufferedReader woori = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\woori.txt"));
 		String wooriUrl = woori.readLine();
@@ -161,6 +161,12 @@ public class BankList {
 		String wooSellYuan = wooYuanSellRate.text().replace(",", "");
 		String wooBuyYen = wooYenBuyRate.text().replace(",", "");
 		String wooSellYen = wooYenSellRate.text().replace(",", "");
+		
+		Date from = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = transFormat.format(from);
+
+		CrawlingDAO.insertWOORI(new CrawlingBean(now, wooBuyDollar, wooSellDollar, wooBuyEuro, wooSellEuro, wooBuyYuan, wooSellYuan, wooBuyYen, wooSellYen));
 
 		ArrayList wooList = new ArrayList();
 		wooList.add(wooBuyDollar);
@@ -175,7 +181,7 @@ public class BankList {
 		return wooList;
 	}
 
-	public static ArrayList<String> nhBank() throws IOException, InterruptedException {
+	public static ArrayList<String> nhBank() throws IOException, InterruptedException, SQLException {
 		BufferedReader nh = new BufferedReader(
 				new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\nonghyup.txt"));
 		String nhUrl = nh.readLine();
@@ -205,6 +211,12 @@ public class BankList {
 		String nhSellYuan = nhYuanSellRate.text().replace(",", "");
 		String nhBuyYen = nhYenBuyRate.text().replace(",", "");
 		String nhSellYen = nhYenSellRate.text().replace(",", "");
+		
+		Date from = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = transFormat.format(from);
+
+		CrawlingDAO.insertNH(new CrawlingBean(now, nhBuyDollar, nhSellDollar, nhBuyEuro, nhSellEuro, nhBuyYuan, nhSellYuan, nhBuyYen, nhSellYen));
 
 		ArrayList nhList = new ArrayList();
 		nhList.add(nhBuyDollar);
@@ -219,7 +231,7 @@ public class BankList {
 		return nhList;
 	}
 
-	public static ArrayList<String> kbBank() throws IOException, InterruptedException {
+	public static ArrayList<String> kbBank() throws IOException, InterruptedException, SQLException {
 		BufferedReader kb = new BufferedReader(new FileReader("C:\\0.bigData\\abroad_crawling-server\\util\\kb.txt"));
 		String kbUrl = kb.readLine();
 		String kbUrlWithDummy = kbUrl + "&" + String.valueOf((Math.random()*1000)).replace(".", "");
@@ -249,6 +261,12 @@ public class BankList {
 		String kbSellYen = kbYenSellRate.text().replace(",", "");
 
 //		driver.quit();
+		
+		Date from = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = transFormat.format(from);
+
+		CrawlingDAO.insertKB(new CrawlingBean(now, kbBuyDollar, kbSellDollar, kbBuyEuro, kbSellEuro, kbBuyYuan, kbSellYuan, kbBuyYen, kbSellYen));
 
 		ArrayList kbList = new ArrayList();
 		kbList.add(kbBuyDollar);
