@@ -26,6 +26,11 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/aws-java-sdk-core-1.11.67.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/aws-java-sdk-kms-1.11.67.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/aws-java-sdk-s3-1.11.67.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/aws-xray-recorder-sdk-aws-sdk-1.0.5-beta.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/aws-xray-recorder-sdk-core-1.0.5-beta.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
