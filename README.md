@@ -11,7 +11,7 @@
 - OracleDB
 - AWS eleastic Beanstalk
 - java Quartz
-- chormeDriver(크롤링)
+- Selenium(Chromedriver)
 
 
 ## 크롤링 서버
